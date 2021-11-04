@@ -257,7 +257,7 @@ endif(ENABLE_FREESRP)
 ########################################################################
 # Setup CyberRadio component
 ########################################################################
-GR_REGISTER_COMPONENT("CyberRadio Devices" ENABLE_CYBERRADIO GNURADIO_CYBERRADIO_FOUND)
+GR_REGISTER_COMPONENT("CyberRadio Devices" ENABLE_CYBERRADIO GNURADIO_CYBERRADIO_FOUND LIBCYBERRADIO_FOUND)
 if(ENABLE_CYBERRADIO)
 GR_INCLUDE_SUBDIRECTORY(CyberRadio)
 endif(ENABLE_CYBERRADIO)

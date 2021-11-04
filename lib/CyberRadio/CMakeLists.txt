@@ -35,4 +35,4 @@ set(cr_srcs
 # Append gnuradio-osmosdr library sources
 ########################################################################
 list(APPEND gr_osmosdr_srcs ${cr_srcs})
-list(APPEND gr_osmosdr_libs ${GNURADIO_CYBERRADIO_LIBRARIES})
+list(APPEND gr_osmosdr_libs ${GNURADIO_CYBERRADIO_LIBRARIES} ${LIBCYBERRADIO_LIB})

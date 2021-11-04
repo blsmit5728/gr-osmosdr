@@ -90,6 +90,10 @@
 #include <freesrp_source_c.h>
 #endif
 
+#ifdef ENABLE_CYBERRADIO
+#include <cyberradio_source_c.h>
+#endif
+
 #include "arg_helpers.h"
 
 using namespace osmosdr;

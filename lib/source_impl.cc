@@ -92,6 +92,10 @@
 #include <freesrp_source_c.h>
 #endif
 
+#ifdef ENABLE_CYBERRADIO
+#include <cyberradio_source_c.h>
+#endif
+
 #include "arg_helpers.h"
 #include "source_impl.h"
 
@@ -166,6 +170,9 @@ source_impl::source_impl( const std::string &args )
 #ifdef ENABLE_FREESRP
   dev_types.push_back("freesrp");
 #endif
+#ifdef ENABLE_CYBERRADIO
+  dev_types.push_back("cyberradio");
+#endif  
   std::cerr << "gr-osmosdr "
             << GR_OSMOSDR_VERSION << " (" << GR_OSMOSDR_LIBVER << ") "
             << "gnuradio " << gr::version() << std::endl;
@@ -245,7 +252,10 @@ source_impl::source_impl( const std::string &args )
     BOOST_FOREACH( std::string dev, freesrp_source_c::get_devices() )
       dev_list.push_back( dev );
 #endif
-
+#ifdef ENABLE_CYBERRADIO
+    BOOST_FOREACH( std::string dev, cyberradio_source_c::get_devices() )
+      dev_list.push_back( dev );
+#endif
 //    std::cerr << std::endl;
 //    BOOST_FOREACH( std::string dev, dev_list )
 //      std::cerr << "'" << dev << "'" << std::endl;
@@ -372,6 +382,13 @@ source_impl::source_impl( const std::string &args )
 #ifdef ENABLE_FREESRP
     if ( dict.count("freesrp") ) {
       freesrp_source_c_sptr src = make_freesrp_source_c( arg );
+      block = src; iface = src.get();
+    }
+#endif
+
+#ifdef ENABLE_CYBERRADIO
+    if ( dict.count("cyberradio") ) {
+      cyberradio_source_c_sptr src = make_cyberradio_source_c( arg );
       block = src; iface = src.get();
     }
 #endif
