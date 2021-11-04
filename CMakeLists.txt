@@ -174,6 +174,7 @@ find_package(LibbladeRF)
 find_package(SoapySDR NO_MODULE)
 find_package(LibFreeSRP)
 find_package(Doxygen)
+find_package(CyberRadio)
 
 if(NOT GNURADIO_RUNTIME_FOUND)
     message(FATAL_ERROR "GnuRadio Runtime required to build " ${CMAKE_PROJECT_NAME})

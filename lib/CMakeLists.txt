@@ -255,6 +255,14 @@ GR_INCLUDE_SUBDIRECTORY(freesrp)
 endif(ENABLE_FREESRP)
 
 ########################################################################
+# Setup CyberRadio component
+########################################################################
+GR_REGISTER_COMPONENT("CyberRadio Devices" ENABLE_CYBERRADIO GNURADIO_CYBERRADIO_FOUND)
+if(ENABLE_CYBERRADIO)
+GR_INCLUDE_SUBDIRECTORY(CyberRadio)
+endif(ENABLE_CYBERRADIO)
+
+########################################################################
 # Setup configuration file
 ########################################################################
 ADD_DEFINITIONS(-DHAVE_CONFIG_H=1)
