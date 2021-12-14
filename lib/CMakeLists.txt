@@ -258,6 +258,14 @@ if(ENABLE_XTRX)
 endif(ENABLE_XTRX)
 
 ########################################################################
+# Setup cyberradio component
+########################################################################
+GR_REGISTER_COMPONENT("CyberRadio" ENABLE_CYBERRADIO LIBCYBERRADIO_FOUND)
+if(ENABLE_CYBERRADIO)
+    add_subdirectory(cyberradio)
+endif(ENABLE_CYBERRADIO)
+
+########################################################################
 # Setup configuration file
 ########################################################################
 add_definitions(-DHAVE_CONFIG_H=1)
