@@ -42,6 +42,19 @@ cyberradio_source_c::cyberradio_source_c(const std::string &args) :
     _center_freq(0.0f)
 {
     dict_t dict = params_to_dict(args);
+    std::string host = "192.168.0.10";
+    std::string radioType = "ndr551";
+
+    if ( dict.count( "host" ) )
+    {
+      host = boost::lexical_cast<std::string>(dict["host"]);
+    }
+    if ( dict.count( "type" ) )
+    {
+      radioType = boost::lexical_cast<std::string>(dict["type"]);
+    }
+    mRadioCtlHandler = LibCyberRadio::Driver::getRadioObject(radioType, host);
+
     /*
     (const std::string &src_ip,
     unsigned short port,
@@ -62,20 +75,38 @@ cyberradio_source_c::cyberradio_source_c(const std::string &args) :
 
 }
 
+std::vector< std::string > cyberradio_source_c::get_devices( bool fake )
+{
+  std::vector<std::string> devices;
+  if ( fake )
+  {
+    std::string args = "cyberradio,host=192.168.0.10,type=NDR551";
+    args += ",label='CyberRadio NDR551'";
+    devices.push_back( args );
+  }
+  return devices;
+}
+
 size_t cyberradio_source_c::get_num_channels( void )
 {
-    return 4;
+    return boost::lexical_cast<size_t>(mRadioCtlHandler->getNumTuner());
 }
 
 osmosdr::meta_range_t cyberradio_source_c::get_sample_rates( void )
 {
     osmosdr::meta_range_t rates;
-    rates += osmosdr::range_t( 225.28e6 );
-    rates += osmosdr::range_t( 168.96e6 );
-    rates += osmosdr::range_t( 42.24e6 );
-    rates += osmosdr::range_t( 21.12e6 );
-    rates += osmosdr::range_t( 10.56e6 );
-    rates += osmosdr::range_t( 660e3 ); 
+    LibCyberRadio::Driver::WbddcRateSet wbddc_rates = mRadioCtlHandler->getWbddcRateSet();
+    LibCyberRadio::Driver::NbddcRateSet nbddc_rates = mRadioCtlHandler->getNbddcRateSet();
+    for(auto it = wbddc_rates.cbegin(); it != wbddc_rates.cend(); ++it)
+    {
+        std::cout << "Filter Index: " << it->first << " -- Rate: " << it->second << "\n";
+        rates += osmosdr::range_t( it->second );
+    }
+    for(auto it = nbddc_rates.cbegin(); it != nbddc_rates.cend(); ++it)
+    {
+        std::cout << "Filter Index: " << it->first << " -- Rate: " << it->second << "\n";
+        rates += osmosdr::range_t( it->second );
+    }
     return rates;
 }
 

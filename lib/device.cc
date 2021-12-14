@@ -198,6 +198,10 @@ devices_t device::find(const device_t &hint)
   BOOST_FOREACH( std::string dev, soapy_source_c::get_devices() )
     devices.push_back( device_t(dev) );
 #endif
+#ifdef ENABLE_CYBERRADIO
+  BOOST_FOREACH( std::string dev, cyberradio_source_c::get_devices( fake ) )
+    devices.push_back( device_t(dev) );
+#endif
 
   /* software-only sources should be appended at the very end,
    * hopefully resulting in hardware sources to be shown first
@@ -215,6 +219,7 @@ devices_t device::find(const device_t &hint)
   BOOST_FOREACH( std::string dev, file_source_c::get_devices( fake ) )
     devices.push_back( device_t(dev) );
 #endif
+
 
   return devices;
 }

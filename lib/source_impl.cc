@@ -256,9 +256,9 @@ source_impl::source_impl( const std::string &args )
     BOOST_FOREACH( std::string dev, cyberradio_source_c::get_devices() )
       dev_list.push_back( dev );
 #endif
-//    std::cerr << std::endl;
-//    BOOST_FOREACH( std::string dev, dev_list )
-//      std::cerr << "'" << dev << "'" << std::endl;
+    std::cerr << std::endl;
+    BOOST_FOREACH( std::string dev, dev_list )
+      std::cerr << "'" << dev << "'" << std::endl;
 
     if ( dev_list.size() )
       arg_list.push_back( dev_list.front() );

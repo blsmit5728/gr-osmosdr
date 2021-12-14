@@ -44,6 +44,8 @@ private:
 public:
   ~cyberradio_source_c();
 
+  static std::vector< std::string > get_devices( bool fake = true );
+
   size_t get_num_channels( void );
   osmosdr::meta_range_t get_sample_rates( void );
   double set_sample_rate( double rate );
@@ -70,7 +72,7 @@ public:
 private:
   double _center_freq;
   gr::CyberRadio::vita_udp_rx::sptr _src;
-  LibCyberRadio::Driver::RadioHandlerPtr radioCtl;
+  LibCyberRadio::Driver::RadioHandlerPtr mRadioCtlHandler;
 
 };
 
